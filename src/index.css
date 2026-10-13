@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { --dur: .3s; --lift: 8px; --ease: cubic-bezier(.22,1,.36,1); }
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-white font-sans text-ink antialiased; }
+  h1, h2, h3 { @apply font-display; }
+  :focus-visible { outline: 2px solid #fc4295; outline-offset: 2px; }
+}
+
+@layer components {
+  .container-page { @apply mx-auto w-full max-w-page px-4 sm:px-6 lg:px-8; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white; transition: transform var(--dur) var(--ease), background-color var(--dur), box-shadow var(--dur); }
+  .btn:hover { @apply bg-brand-600 shadow-card; transform: translateY(calc(var(--lift) * -.4)); }
+  .btn-outline { @apply inline-flex items-center justify-center gap-2 rounded-full border border-brand px-6 py-3 text-sm font-semibold uppercase tracking-wide text-brand; transition: all var(--dur) var(--ease); }
+  .btn-outline:hover { @apply bg-brand text-white; }
+  .field { @apply w-full rounded-lg border border-brand-200 bg-white px-3 py-2.5 text-sm outline-none; transition: border-color var(--dur), box-shadow var(--dur); }
+  .field:focus { @apply border-brand; box-shadow: 0 0 0 3px rgba(252,66,149,.15); }
+  .hover-lift { transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+  .hover-lift:hover { transform: translateY(calc(var(--lift) * -1)); @apply shadow-card; }
+  .img-zoom img, .img-zoom svg { transition: transform calc(var(--dur) * 2) var(--ease); }
+  .img-zoom:hover img, .img-zoom:hover svg { transform: scale(1.06); }
+  .link-u { background: linear-gradient(currentColor, currentColor) 0 100%/0 1px no-repeat; transition: background-size var(--dur) var(--ease); }
+  .link-u:hover { background-size: 100% 1px; }
+  .prose-sm-x p { @apply mb-3 leading-relaxed text-ink-soft; }
+}
+
+/* Animations off → remove decorative transitions/animations (important interactions still work). */
+[data-motion='off'] *, [data-motion='off'] *::before, [data-motion='off'] *::after {
+  transition-duration: 0s !important; animation: none !important; scroll-behavior: auto !important;
+}
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee { animation: marquee 28s linear infinite; }
+@keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.floaty { animation: floaty 3s ease-in-out infinite; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
